@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.godliusheng.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言在centos服务器安装MySql数据库  操作系统：centos7 x86 型号（规格）：1核 2GB 硬盘：40GB 高IO MySql版本：8.0.20（据说比5.7快2倍）  准备通过ssh登陆服务器 1ssh root@124.70.141.52 然后输入root对应的密码，登陆服务器  因为centos7预安装了mariadb，需要先卸载mariadb。 查看是否安装了mariad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7安装MySql8">
+<meta property="og:url" content="http://www.godliusheng.com/2020/07/09/mysql-install/index.html">
+<meta property="og:site_name" content="liusheng的博客">
+<meta property="og:description" content="前言在centos服务器安装MySql数据库  操作系统：centos7 x86 型号（规格）：1核 2GB 硬盘：40GB 高IO MySql版本：8.0.20（据说比5.7快2倍）  准备通过ssh登陆服务器 1ssh root@124.70.141.52 然后输入root对应的密码，登陆服务器  因为centos7预安装了mariadb，需要先卸载mariadb。 查看是否安装了mariad">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/login.png">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/mariadb.png">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/yum.png">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/install.png">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/password.png">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/success.png">
+<meta property="og:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/whereis.png">
+<meta property="article:published_time" content="2020-07-09T12:26:29.000Z">
+<meta property="article:modified_time" content="2020-07-09T16:47:58.638Z">
+<meta property="article:author" content="liusheng">
+<meta property="article:tag" content="MySql8">
+<meta property="article:tag" content="centos7">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.godliusheng.com/2020/07/09/mysql-install/login.png">
+
+<link rel="canonical" href="http://www.godliusheng.com/2020/07/09/mysql-install/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>centos7安装MySql8 | liusheng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">liusheng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.godliusheng.com/2020/07/09/mysql-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liusheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liusheng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          centos7安装MySql8
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-09 20:26:29" itemprop="dateCreated datePublished" datetime="2020-07-09T20:26:29+08:00">2020-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-10 00:47:58" itemprop="dateModified" datetime="2020-07-10T00:47:58+08:00">2020-07-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">服务器配置</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在centos服务器安装MySql数据库</p>
+<ul>
+<li>操作系统：centos7 x86</li>
+<li>型号（规格）：1核 2GB</li>
+<li>硬盘：40GB 高IO</li>
+<li>MySql版本：8.0.20（据说比5.7快2倍）</li>
+</ul>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>通过ssh登陆服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@124.70.141.52</span><br></pre></td></tr></table></figure>
+<p>然后输入root对应的密码，登陆服务器</p>
+<p><img src="/2020/07/09/mysql-install/login.png" alt="登陆服务器"></p>
+<p>因为centos7预安装了mariadb，需要先卸载mariadb。</p>
+<p>查看是否安装了mariadb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mariadb</span><br></pre></td></tr></table></figure>
+
+<p>然后卸载mariadb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e mariadb-libs-5.5.64-1.el7.x86_64 --nodeps</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/09/mysql-install/mariadb.png" alt="卸载mariadb"></p>
+<h1 id="卸载历史版本MySql服务"><a href="#卸载历史版本MySql服务" class="headerlink" title="卸载历史版本MySql服务"></a>卸载历史版本MySql服务</h1><h2 id="查看是否拥有历史版本"><a href="#查看是否拥有历史版本" class="headerlink" title="查看是否拥有历史版本"></a>查看是否拥有历史版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep mysql</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看MySql服务状态"><a href="#查看MySql服务状态" class="headerlink" title="查看MySql服务状态"></a>查看MySql服务状态</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysqld status</span><br></pre></td></tr></table></figure>
+
+<h2 id="暂停MySql服务"><a href="#暂停MySql服务" class="headerlink" title="暂停MySql服务"></a>暂停MySql服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysqld stop</span><br></pre></td></tr></table></figure>
+
+<h2 id="卸载历史版本的MySql服务"><a href="#卸载历史版本的MySql服务" class="headerlink" title="卸载历史版本的MySql服务"></a>卸载历史版本的MySql服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rpm ev [需要移除组件的名称]</span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制卸载</span></span><br><span class="line">rpm -e --nodeps [需要移除组件的名称]</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装MySql服务"><a href="#安装MySql服务" class="headerlink" title="安装MySql服务"></a>安装MySql服务</h1><p>可以从<a href="http://repo.mysql.com/yum/" target="_blank" rel="noopener">MySql repo源仓库中的yum类型源</a>中查找指定版本的数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://repo.mysql.com/mysql80-community-release-el7-1.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/09/mysql-install/yum.png" alt="yum包"><br>安装rpm包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rpm -vih mysql80-community-release-el7-1.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>yum安装mysql服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
+
+<p>如果显示以下情形则表示安装成功，安装过程中会有两次Y/N的询问，输入Y就行<br><img src="/2020/07/09/mysql-install/install.png" alt="成功图片"><br>此时默认已经设置为开机启动MySql服务</p>
+<h1 id="初始化MySql"><a href="#初始化MySql" class="headerlink" title="初始化MySql"></a>初始化MySql</h1><p>初始化服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize</span><br></pre></td></tr></table></figure>
+
+<p>查看MySql生成的默认密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep 'temporary password' /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/09/mysql-install/password.png" alt="默认密码"><br>可以复制root@localhost：后面的密码然后登陆mysql</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>然后输入之前复制的密码登陆，此时将会显示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 2002 (HY000): cant connet to local MySQL server through socket '/var/lib/mysql/mysql.sock'</span><br></pre></td></tr></table></figure>
+
+<p>这是因为MySql服务没有安装/运行，或者/var/lib/mysql/mysql.sock这个文件不存在。如果是因为服务没有运行，则开启服务运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysqld start</span><br></pre></td></tr></table></figure>
+
+<p>现在这种情形是因为/var/lib/mysql/mysql.sock文件不存在。需要编辑my.cnf，首先找到my.cnf（一般在/etc/）然后编辑文件，修改为如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line"></span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/var/run/mysqld/mysqld.pid</span><br><span class="line">user=mysql</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 为了防止安全风险，建议关闭symbolic-links</span></span></span><br><span class="line">symbolic-links=0</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line"></span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br></pre></td></tr></table></figure>
+<p>然后重启MySql服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld.service</span><br></pre></td></tr></table></figure>
+<p>这时候报mysqld.service entered failed state这个错误。可以通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+<p>查看错误详情</p>
+<p>也可以通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -xe</span><br></pre></td></tr></table></figure>
+<p>查看完整的日志，但是并不能提供服务启动失败的原因<br>此时可以通过以下几种方式来进行排查</p>
+<p>1、查看/var/lib/mysql文件夹的拥有者和用户组必须是mysql:mysql，而且文件夹的权限必须是700</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -ld /var/lib/mysql/</span><br></pre></td></tr></table></figure>
+
+<p>2、查看/var/lib/mysql文件夹下面的所有文件夹的拥有者和用户组必须是mysql:mysql，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh /var/lib/mysql/</span><br></pre></td></tr></table></figure>
+
+<p>3、查看网络tcp端口的监听情况</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstate -ntlp</span><br></pre></td></tr></table></figure>
+
+<p>4、查看mysql的日志文件，查看错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysql/mysqld.log</span><br></pre></td></tr></table></figure>
+
+<p>5、尝试使用以下命令来启动mysql</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld_safe --defaults-file=/etc/my.cf</span><br></pre></td></tr></table></figure>
+
+<p>当看到如下场景时说明MySql已经安装完成!<br><img src="/2020/07/09/mysql-install/success.png" alt="mysql"></p>
+<p>然后通过以下命令来重置密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter user 'root'@'localhost' identified by 'your_password'</span><br></pre></td></tr></table></figure>
+
+<p>最后开启远程连接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line"><span class="meta">#</span><span class="bash">修改root账户权限</span></span><br><span class="line">update user set host = '%' where host = 'root';</span><br><span class="line"><span class="meta">#</span><span class="bash">刷新权限</span></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>查看MySql安装在哪个目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis mysql</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/07/09/mysql-install/whereis.png" alt="whereis"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] <a href="https://www.jianshu.com/p/224a891932d8" target="_blank" rel="noopener">CentOS 7安装MySQL8.0</a><br>[2] <a href="https://stackoverflow.com/questions/34113689/job-for-mysqld-service-failed-in-centos-7" target="_blank" rel="noopener">job for mysqld service failed in centos 7</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySql8/" rel="tag"># MySql8</a>
+              <a href="/tags/centos7/" rel="tag"># centos7</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卸载历史版本MySql服务"><span class="nav-number">3.</span> <span class="nav-text">卸载历史版本MySql服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看是否拥有历史版本"><span class="nav-number">3.1.</span> <span class="nav-text">查看是否拥有历史版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看MySql服务状态"><span class="nav-number">3.2.</span> <span class="nav-text">查看MySql服务状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暂停MySql服务"><span class="nav-number">3.3.</span> <span class="nav-text">暂停MySql服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卸载历史版本的MySql服务"><span class="nav-number">3.4.</span> <span class="nav-text">卸载历史版本的MySql服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装MySql服务"><span class="nav-number">4.</span> <span class="nav-text">安装MySql服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化MySql"><span class="nav-number">5.</span> <span class="nav-text">初始化MySql</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.1.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">liusheng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liusheng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '429bbaec5d9457b5ece5',
+      clientSecret: '1fa6563f5ad8427c14b0493ab7b7931dd2c11528',
+      repo        : 'liusir0215.github.io',
+      owner       : 'liusir0215',
+      admin       : ['liusir0215'],
+      id          : '58ab322fecbcdbff6c0e138a1464abfd',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
