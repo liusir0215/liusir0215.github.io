@@ -115,7 +115,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">1</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">4</span></a>
 
   </li>
   </ul>
@@ -144,6 +144,292 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.godliusheng.com/2020/07/13/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liusheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liusheng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/13/docker/" class="post-title-link" itemprop="url">docker-compose</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-13 21:58:18" itemprop="dateCreated datePublished" datetime="2020-07-13T21:58:18+08:00">2020-07-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.godliusheng.com/2020/07/13/install-apache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liusheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liusheng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/13/install-apache/" class="post-title-link" itemprop="url">centos7安装apache</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-13 21:57:55" itemprop="dateCreated datePublished" datetime="2020-07-13T21:57:55+08:00">2020-07-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">服务器配置</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="服务器centos7安装Apache"><a href="#服务器centos7安装Apache" class="headerlink" title="服务器centos7安装Apache"></a>服务器centos7安装Apache</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>nginx和Apache作为现在非常流行的两大web服务器软件，毋庸置疑都拥有非常优越的性能。<br>Apache http服务器是使用最广泛的web服务器，它提供了很多优秀的特性，包括动态加载模块，强大的媒体支持以及针对其他流行软件的广泛支持</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>在安装前你需要提前准备一下步骤</p>
+<ul>
+<li>服务器上需要有一个拥有sudo权限的非root角色，可以参照<a href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-centos-7" target="_blank" rel="noopener">初始化centos设置</a>进行设置</li>
+<li>针对防火墙进行简单的配置，可以参照<a href="https://www.digitalocean.com/community/tutorials/additional-recommended-steps-for-new-centos-7-servers#configuring-a-basic-firewall" target="_blank" rel="noopener">Additional Recommended Steps for New CentOS 7 Servers</a>进行配置</li>
+</ul>
+<h1 id="第一步-安装Apache"><a href="#第一步-安装Apache" class="headerlink" title="第一步-安装Apache"></a>第一步-安装Apache</h1><p>centos系统中默认就有Apache的<code>yum</code>源，可以通过<code>yum</code>包管理器进行安装。</p>
+<p>先更新本地Apache <code>httpd</code>包到最新版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update httpd</span><br></pre></td></tr></table></figure>
+
+<p>更新完成后安装Apache</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install httpd</span><br></pre></td></tr></table></figure>
+
+<p>在安装过程中需要进行一次确认，输入yes即可。<code>yum</code>将安装Apache和需要的依赖</p>
+<p>如果你已经按照上面的步骤配置了防火墙，需要通过以下命令来允许http和https的通信</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo firewall-cmd --permanent --zone=public --add-service=http </span><br><span class="line">sudo firewall-cmd --permanent --zone=public --add-service=https</span><br><span class="line">sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h1 id="第二步-验证web服务器"><a href="#第二步-验证web服务器" class="headerlink" title="第二步-验证web服务器"></a>第二步-验证web服务器</h1><p>安装完成后Apache不会自动启动，需要手动启动Apache服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start httpd</span><br></pre></td></tr></table></figure>
+
+<p>通过以下命令来查看Apache服务状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status httpd.service</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Output</span><br><span class="line">Redirecting to /bin/systemctl status httpd.service</span><br><span class="line">● httpd.service - The Apache HTTP Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Wed 2019-02-20 01:29:08 UTC; 5s ago</span><br><span class="line">     Docs: man:httpd(8)</span><br><span class="line">           man:apachectl(8)</span><br><span class="line"> Main PID: 1290 (httpd)</span><br><span class="line">   Status: "Processing requests..."</span><br><span class="line">   CGroup: /system.slice/httpd.service</span><br><span class="line">           ├─1290 /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─1291 /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─1292 /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─1293 /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           ├─1294 /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">           └─1295 /usr/sbin/httpd -DFOREGROUND</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>如果Active是<code>active (running)</code>则代表是启动状态。当然最好的方法是从浏览器访问域名或者ip地址来进行验证</p>
+<p>如果Apache成功安装并且正常运行，在浏览器中通过ip地址访问的时候将会看到以下Apache默认页面</p>
+<p><img src="https://assets.digitalocean.com/articles/CART-65406/apache_default_page.png" alt="Apache默认页面"></p>
+<p>如果你不知道当前服务器的公网ip地址，你可以通过以下几种方法来获得</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostname -I</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会把所有的网络地址展示出来，所以你会拿到几个不同分区的地址，你可以在浏览器中对它们分别进行尝试，看看是否有成功的。</p>
+<p>另外，你还可以用<code>curl</code>请求<code>icanhazip.com</code>来拿到当前服务器从公网其他地址访问时的IPv4地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -4 icanhazip.com</span><br></pre></td></tr></table></figure>
+
+<h1 id="第三步-管理Apache进程"><a href="#第三步-管理Apache进程" class="headerlink" title="第三步-管理Apache进程"></a>第三步-管理Apache进程</h1><p>可以通过以下命令来停止Apache服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop httpd</span><br></pre></td></tr></table></figure>
+<p>通过以下命令来重启Apache服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart httpd</span><br></pre></td></tr></table></figure>
+
+<p>为了让以上命令生效，需要重新加载Apache服务。重新加载不会导致连接被丢弃</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload httpd</span><br></pre></td></tr></table></figure>
+
+<p>当Apache服务安装后会设置为重启自启动，你可以通过以下命令来开启/关闭自启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 关闭自启动</span></span><br><span class="line">sudo systemctl disable httpd</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开启自启动</span></span><br><span class="line">sudo systemctl enable httpd</span><br></pre></td></tr></table></figure>
+
+<p>Apache默认配置允许服务器host一个站点，如果想要host多个域名的时候，你需要配置虚拟hosts(virtul hosts)</p>
+<h1 id="第四步-配置虚拟hosts"><a href="#第四步-配置虚拟hosts" class="headerlink" title="第四步-配置虚拟hosts"></a>第四步-配置虚拟hosts</h1><p>你可以通过配置虚拟hosts封装配置细节来host多个站点，在这一步你将配置<code>example.com</code>的站点，在你配置的时候需要替换成你真实的域名。</p>
+<p>centos上的Apache服务默认就有配置将<code>/var/www/html</code>文件夹作为根目录的服务器块。对于单个站点的情况这已经足够，不过当需要host多个站点的时候就不满足了。你可以在<code>/var/www</code>文件夹中新建一个<code>example.com</code></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-centos-7" target="_blank" rel="noopener">how to install the apache web server on centos7</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.godliusheng.com/2020/07/13/install-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="liusheng">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liusheng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/13/install-nginx/" class="post-title-link" itemprop="url">centos7安装nginx</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-13 21:57:48" itemprop="dateCreated datePublished" datetime="2020-07-13T21:57:48+08:00">2020-07-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">服务器配置</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="服务器centos7安装nginx"><a href="#服务器centos7安装nginx" class="headerlink" title="服务器centos7安装nginx"></a>服务器centos7安装nginx</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>nginx和apache作为现在非常流行的两大web服务器软件，毋庸置疑都拥有非常优越的性能。<br>nginx是一个高性能的web服务器软件，它相对于apache更加的灵活轻量；这篇文章将告诉你如何在centos7上安装并启动nginx。</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>我认为你已通过terminal登录到服务器。安装nginx需要用户有root权限，可以按照<a href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-centos-7" target="_blank" rel="noopener">初始化centos7指南</a>教程中第三步和第四步来进行设置</p>
+<h1 id="第一步-增加nginx源"><a href="#第一步-增加nginx源" class="headerlink" title="第一步-增加nginx源"></a>第一步-增加nginx源</h1><p>增加CentOS 7 EPEL源，在terminal中输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install epel-release</span><br></pre></td></tr></table></figure>
+
+<h1 id="第二步-安装nginx"><a href="#第二步-安装nginx" class="headerlink" title="第二步-安装nginx"></a>第二步-安装nginx</h1><p>通过第一步nginx源已经安装到服务器，现在可以通过yum install来进行安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install nginx</span><br></pre></td></tr></table></figure>
+<p>在安装过程中会有一次确认，你回答yes即可。这样nginx将安装到你的vps服务器上</p>
+<h1 id="第三步-启动nginx"><a href="#第三步-启动nginx" class="headerlink" title="第三步-启动nginx"></a>第三步-启动nginx</h1><p>nginx安装后不会自动启动，需要通过以下命令来启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start nginx</span><br></pre></td></tr></table></figure>
+<p>通过一下命令停止和重启nginx服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 停止nginx服务</span></span></span><br><span class="line">sudo systemctl stop nginx</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 重启nginx服务</span></span></span><br><span class="line">sudo systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>可以通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system status nginx.service</span><br></pre></td></tr></table></figure>
+<p>命令来查看nginx运行状态<br><img src="http://img95.699pic.com/element/40102/6907.png_300.png!/clip/0x300a0a0" alt="运行状态"></p>
+<p>启动后如果服务器中有安装防火墙，需要通过以下命令来允许http和https的通信</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo firewall-cmd --permanent --zone=public --add-service=http </span><br><span class="line">sudo firewall-cmd --permanent --zone=public --add-service=https</span><br><span class="line">sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p>你可以通过访问域名或ip来验证服务器apache是否已经安装完毕且运行正常</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://server_domain_name_or_IP/</span><br></pre></td></tr></table></figure>
+
+<p>如果返回如下页面则代表运行正常<br><img src="http://assets.digitalocean.com/articles/centos/nginx/centos-7-nginx.png" alt="默认页面"></p>
+<p>接下来就是设置nginx在系统重启的时候自启动，可以通过一下命令来实现</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable nginx</span><br></pre></td></tr></table></figure>
+
+<p>通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl is-enabled nginx.service</span><br></pre></td></tr></table></figure>
+<p>来验证自启动设置是否生效<br><img src="http://img95.699pic.com/element/40102/6907.png_300.png!/clip/0x300a0a0" alt="自启动"></p>
+<p>恭喜你！nginx服务已经在你的服务器成功安装、运行并且设置服务器自启动</p>
+<h1 id="如何查看服务器的公网ip"><a href="#如何查看服务器的公网ip" class="headerlink" title="如何查看服务器的公网ip"></a>如何查看服务器的公网ip</h1><p>如果你是通过阿里云这种平台购买的服务器，可以通过控制中心查询到公网ip。你还可以通过以下命令来进行查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr</span><br></pre></td></tr></table></figure>
+<p><img src="http://img95.699pic.com/element/40102/6907.png_300.png!/clip/0x300a0a0" alt="ip地址"></p>
+<h1 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h1><h2 id="默认根目录"><a href="#默认根目录" class="headerlink" title="默认根目录"></a>默认根目录</h2><p>nginx默认的根目录是<code>/var/www/html</code>，在这个文件夹中的文件将被作为web页面。这个路径的默认配置是放在<code>/etc/nginx/conf.d/default.conf</code>中的。</p>
+<h2 id="服务器块设置"><a href="#服务器块设置" class="headerlink" title="服务器块设置"></a>服务器块设置</h2><p>可增加的服务器块可以在<code>/etc/nginx/conf.d</code>文件夹中进行添加。在这个文件夹中文件名是以<code>.conf</code>结尾的文件都将在nginx启动后加载</p>
+<h2 id="nginx全局配置"><a href="#nginx全局配置" class="headerlink" title="nginx全局配置"></a>nginx全局配置</h2><p>nginx的主要配置信息都是配置在<code>/etc/nginx/nginx.conf</code>文件中。在这个文件中可以配置 运行nginx保护进程的用户、nginx运行时产生的工作进程数量 等配置</p>
+<h2 id="反向代理配置"><a href="#反向代理配置" class="headerlink" title="反向代理配置"></a>反向代理配置</h2><p>nginx默认监听的是<code>80</code>端口，一般web服务器都会将<code>80</code>端口预留给nginx。因为nginx作为网络代理可以进行负载均衡，通过配置将不同请求分发到不同服务器或者同一个服务器的不同端口。可以参照<a href="https://www.cnblogs.com/fanzhidongyzby/p/5194895.html" target="_blank" rel="noopener">nginx常用代理配置</a>来对nginx进行配置</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-centos-7" target="_blank" rel="noopener">how to install nginx on centos</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -370,18 +656,18 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
